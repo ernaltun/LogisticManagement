@@ -1,0 +1,38 @@
+﻿@model List<Invoice>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@* <a asp-action="AddCustomer" asp-controller="Customer" class="btn btn-primary">Yeni Müşteri Ekle</a> *@
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Fatura No</th>
+            <th>Fatura Tipi</th>
+            <th>ETTN</th>
+            <th>Müşteri Ünvanı/Adı</th>
+            <th>Müşteri Vergi No</th>
+            <th>Müşteri Adresi</th>
+            <th>Toplam Fatura Tutarı</th>
+            <th>Detay</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var invoice in Model)
+        {
+            <tr>
+                <td>@invoice.InvoiceId</td>
+                <td>@invoice.InvoiceNo</td>
+                <td>@invoice.InvoiceType</td>
+                <td>@invoice.ETTN</td>
+                <td>@invoice.Customer.CustomerName</td>
+                <td>@invoice.Customer.TaxNo</td>
+                <td>@invoice.Customer.Address</td>
+                <td>@invoice.Amount</td>
+                <td>
+                    <a asp-controller="Invoice" asp-action="InvoiceDetails" asp-route-id="@invoice.InvoiceId" class="btn btn-info">Detay</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

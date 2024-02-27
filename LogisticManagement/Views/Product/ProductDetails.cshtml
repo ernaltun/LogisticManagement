@@ -1,0 +1,44 @@
+﻿@model Product
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<form asp-action="ProductEdit" method="post" class="form-group">
+    <input type="hidden" asp-for="@Model.ProductId" />
+    <div class="form-group">
+        <label>Ürün/Hizmet İsmi</label>
+        <input type="text" class="form-control" name="Name" value="@Model.Name" />
+    </div>
+    <div class="form-group">
+        <label>Açıklama</label>
+        <input type="text" class="form-control" name="Description" value="@Model.Description" />
+    </div>
+    <div class="form-group">
+        <label>Fiyat</label>
+        <input type="text" class="form-control" name="Price" value="@Model.Price" />
+    </div>
+    <br />
+    <button type="submit" class="btn btn-primary">Edit</button>
+    <button class="btn btn-danger" onclick="deleteProduct(@Model.ProductId)">Delete</button>
+
+</form>
+@section Scripts {
+    <script>
+        function deleteProduct(productId) {
+            if (confirm('Silmek istediğinize emin misiniz?')) {
+                fetch('/Product/ProductCustomer/' + productId, {
+                    method: 'DELETE'
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            // Silme başarılı olduğunda yapılacak işlemler
+                            // Örneğin, sayfayı yenilemek gibi
+                            location.reload();
+                        } else {
+                            // Silme başarısız olduğunda yapılacak işlemler
+                            alert('An error occurred while deleting the customer.');
+                        }
+                    });
+            }
+        }
+    </script>
+}

@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Lojistik Yönetim</title>
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/LogisticManagement.styles.css" asp-append-version="true" />
+	<!-- Bootstrap CSS -->
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+	<!-- jQuery -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+	<!-- Bootstrap JS -->
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg bg-white shadow-sm">
+		<div class="container">
+			<a href="/Ticket/Index" class="navbar-brand">
+				<i class="bi bi-code"></i> Ernet - Yönetim Panel
+			</a>
+
+			<ul class="navbar-nav ms-auto">
+				@if (User.Identity!.IsAuthenticated)
+				{
+					@if (User.IsInRole("admin"))
+					{
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								Satış Departman Yönetim
+							</a>
+							<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+								<a class="dropdown-item" href="/product/index">Ürün Yönetim</a>
+								<a class="dropdown-item" href="/customer/index">Müşteri Yönetim</a>
+								<div class="dropdown-divider"></div>
+							</div>
+						</li>
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								Fatura Yönetim
+							</a>
+							<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+								<a class="dropdown-item" href="/invoice/index">Fatura Listesi</a>
+								<a class="dropdown-item" href="/invoice/AddInvoice">Fatura Ekle</a>
+								<div class="dropdown-divider"></div>
+							</div>
+						</li>
+					}
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Destek Talep
+						</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<a class="dropdown-item" href="/ticket/create">Destek Talebi Oluştur</a>
+							<a class="dropdown-item" href="/ticket/GetTicketByCurrentUser">Destek Taleplerim</a>
+							<div class="dropdown-divider"></div>
+							@if (User.IsInRole("admin"))
+							{
+								<a href="/ticket/index" class="dropdown-item">Destek Talepleri</a>
+							}
+						</div>
+					</li>
+					<li class="nav-item">
+						<a href="/profile/@User.Identity.Name" class="nav-link">@User.Identity.Name</a>
+					</li>
+					<li class="nav-item">
+						<a href="/users/logout" class="nav-link ">Logout</a>
+					</li>
+
+				}
+				else
+				{
+					<li class="nav-item">
+						<a href="/users/login" class="nav-link">Login</a>
+					</li>
+					<li class="nav-item">
+						<a href="/users/register" class="nav-link">Register</a>
+					</li>
+				}
+			</ul>
+		</div>
+	</nav>
+	<div class="container mt-3">
+		@RenderBody()
+	</div>
+	@RenderSection("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,36 @@
+﻿@model List<Customer>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<a asp-action="AddCustomer" asp-controller="Customer" class="btn btn-primary">Yeni Müşteri Ekle</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>İsim</th>
+            <th>Email</th>
+            <th>Adres</th>
+            <th>Telefon Numarası</th>
+            <th>Vergi No</th>
+            <th>Bakiye</th>
+            <th>Detay</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var customer in Model)
+        {
+            <tr>
+                <td>@customer.CusomerId</td>
+                <td>@customer.CustomerName</td>
+                <td>@customer.CustomerEmail</td>
+                <td>@customer.Address</td>
+                <td>@customer.PhoneNumber</td>
+                <td>@customer.TaxNo</td>
+                <td>@customer.Balance</td>
+                <td>
+                    <a asp-controller="Customer" asp-action="CustomerDetails" asp-route-id="@customer.CusomerId" class="btn btn-info">Detay</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

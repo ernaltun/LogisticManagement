@@ -1,0 +1,56 @@
+﻿@model Customer
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<form asp-action="CustomerEdit" method="post" class="form-group">
+    <input type="hidden" asp-for="@Model.CusomerId" />
+    <div class="form-group">
+        <label>Customer Name:</label>
+        <input type="text" class="form-control" name="CustomerName" value="@Model.CustomerName" />
+    </div>
+    <div class="form-group">
+        <label>Email:</label>
+        <input type="email" class="form-control" name="CustomerEmail" value="@Model.CustomerEmail" />
+    </div>
+    <div class="form-group">
+        <label>Address:</label>
+        <input type="text" class="form-control" name="Address" value="@Model.Address" />
+    </div>
+    <div class="form-group">
+        <label>Phone Number:</label>
+        <input type="text" class="form-control" name="PhoneNumber" value="@Model.PhoneNumber" />
+    </div>
+    <div class="form-group">
+        <label>Tax No:</label>
+        <input type="text" class="form-control" name="TaxNo" value="@Model.TaxNo" />
+    </div>
+    <div class="form-group">
+        <label>Balance:</label>
+        <input type="text" class="form-control" name="Balance" value="@Model.Balance" />
+    </div>
+    <br />
+    <button type="submit" class="btn btn-primary">Edit</button>
+    <button class="btn btn-danger" onclick="deleteCustomer(@Model.CusomerId)">Delete</button>
+
+</form>
+@section Scripts{
+    <script>
+        function deleteCustomer(customerId) {
+            if (confirm('Silmek istediğinize emin misiniz?')) {
+                fetch('/Customer/DeleteCustomer/' + customerId, {
+                    method: 'DELETE'
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            // Silme başarılı olduğunda yapılacak işlemler
+                            // Örneğin, sayfayı yenilemek gibi
+                            location.reload();
+                        } else {
+                            // Silme başarısız olduğunda yapılacak işlemler
+                            alert('An error occurred while deleting the customer.');
+                        }
+                    });
+            }
+        }
+    </script>
+}

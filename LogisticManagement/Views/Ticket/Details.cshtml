@@ -1,0 +1,148 @@
+﻿@model Ticket
+@{
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header">
+                    Ticket Detail
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="TicketId">ID</label>
+                                <input asp-for="TicketId" class="form-control" readonly />
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Title">Başlık</label>
+                                <input asp-for="Title" class="form-control" readonly />
+                            </div>
+                            <div class="form-group">
+                                <label>Durum</label>
+                                <input class="form-control" value="@ViewBag.IsActiveText" readonly />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="PublishedOn">Tarih</label>
+                                <input asp-for="PublishedOn" class="form-control" readonly />
+                            </div>
+                            <div class="form-group">
+                                <input asp-for="UserId" type="hidden" class="form-control" readonly />
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="User.UserName">Kullanıcı</label>
+                                <input asp-for="User.UserName" class="form-control" readonly />
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label asp-for="Description">Açıklama</label>
+                                <textarea asp-for="Description" class="form-control" readonly></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white mt-3">
+                        <div class="card border-0">
+                            <div class="card-header pb-0">
+                                <h4><span id="commentCount">@Model.Comments.Count()</span> adet yorum</h4>
+                            </div>
+                            <div class="card-body">
+                                <div id="comments">
+                                    @foreach (var comment in Model.Comments)
+                                    {
+                                        <div class="my-4">
+                                            <div class="d-flex align-items-start">
+                                                <img src="/img/@comment.User.Image" alt="User Avatar" class="avatar rounded-circle me-3" style="width: 50px; height: 50px;">
+                                                <div>
+                                                    <div class="mb-2">
+                                                        <h6 class="mb-0">
+                                                            <a>@comment.User.Name</a>
+                                                        </h6>
+                                                        <small>@comment.PublishedOn.ToString()</small>
+                                                    </div>
+                                                    <p>@comment.Text</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+
+                                @if (User.Identity!.IsAuthenticated)
+                                {
+                                    <div>
+                                        <h4 class="mb-3">Yorum Ekle</h4>
+                                        <form action="/Ticket/AddComment" method="post">
+                                            <input type="hidden" id="TicketId" name="TicketId" value="@Model.TicketId">
+                                            <div class="mb-3">
+                                                <label for="Text" class="form-label">Yorum</label>
+                                                <textarea type="text" name="Text" id="Text" rows="3" class="form-control"></textarea>
+                                            </div>
+                                            <div class="mb-3">
+                                                <button id="btnYorumKayit" type="submit" class="btn btn-primary">Kaydet</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <p>Yorum için uygulamaya giriş yapmalısınız. <a href="/users/login">Login</a></p>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function () {
+
+			$("#btnYorumKayit").click(function () {
+				$.ajax({
+					type: 'POST',
+					url: '@Url.Action("AddComment")',
+					dataType: 'json',
+					data: {
+						TicketId: $('#TicketId').val(),
+						UserName: $('#UserName').val(),
+						Text: $('#Text').val(),
+					},
+					success: function (yorum) {
+						console.log(yorum);
+						var date = new Date(yorum.publishedOn);
+
+						$("#comments").append(`
+									<div class="my-4 d-flex">
+                                                <img src="/img/${yorum.avatar}" alt="" class="avatar rounded-circle me-3" style="width: 50px; height: 50px;">
+										<div>
+											<div class="mb-2 d-flex">
+												<h6 class="me-2">${yorum.username}</h6>
+												<small>${date.toLocaleDateString()}</small>
+											</div>
+											<p>${yorum.text}</p>
+										</div>
+									</div>
+								`);
+
+						$("#UserName").val('');
+						$("#Text").val('');
+
+						var adet = parseInt($("#commentCount").text());
+						$("#commentCount").text(adet + 1);
+					}
+				});
+
+				return false;
+			});
+
+		});
+	</script>
+}

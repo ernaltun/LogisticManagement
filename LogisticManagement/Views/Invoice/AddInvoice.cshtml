@@ -1,0 +1,39 @@
+﻿@model InvoiceViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<form asp-action="AddInvoice" method="post">
+    <div class="form-group">
+        <label asp-for="Invoice.InvoiceNo">Fatura Numarası:</label>
+        <input asp-for="Invoice.InvoiceNo" class="form-control" />
+        <span asp-validation-for="Invoice.InvoiceNo" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Invoice.InvoiceType">Fatura Tipi:</label>
+        <input asp-for="Invoice.InvoiceType" class="form-control" />
+        <span asp-validation-for="Invoice.InvoiceType" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Invoice.ETTN">ETTN:</label>
+        <input asp-for="Invoice.ETTN" class="form-control" />
+        <span asp-validation-for="Invoice.ETTN" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Customer.CusomerId">Müşteri:</label>
+        <select asp-for="Customer.CusomerId" class="form-control" required>
+            <option value="">Müşteri seçin...</option>
+            @foreach (var customer in  ViewBag.Customers)
+            {
+                <option value="@customer.CusomerId">@customer.CustomerName</option>
+            }
+        </select>
+        <span asp-validation-for="Customer.CusomerId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="SelectedProducts">Ürünler(KDV VE DİĞER TÜM VERGİLER DAHİL):</label>
+        <select asp-for="SelectedProducts" class="form-control" asp-items="@ViewBag.Products" multiple="multiple"></select>
+        <span asp-validation-for="SelectedProducts" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Faturayı Kaydet</button>
+</form>

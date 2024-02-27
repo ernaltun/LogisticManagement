@@ -1,0 +1,30 @@
+﻿@model List<Product>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<a asp-action="AddProduct" asp-controller="Product" class="btn btn-primary">Yeni Ürün Ekle</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Ürün/Hizmet Adı</th>
+            <th>Ürün/Hizmet Açıklaması</th>
+            <th>Fiyat</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model)
+        {
+            <tr>
+                <td>@product.ProductId</td>
+                <td>@product.Name</td>
+                <td>@product.Description</td>
+                <td>@product.Price</td>
+                <td>
+                    <a asp-controller="Product" asp-action="ProductDetails" asp-route-id="@product.ProductId" class="btn btn-info">Detay</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,38 @@
+﻿@model List<Ticket>
+@{
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-5 border table-bordered">
+	<h2>Destek Talepleri</h2>
+	<a class="btn btn-info" href="/Ticket/Create/">Destek Talebi Oluştur</a>
+	<hr />
+	<table class="table">
+		<thead>
+			<tr>
+				<th scope="col">#</th>
+				<th scope="col">Başlık</th>
+				<th scope="col">açıklama</th>
+				<th scope="col">Yayınlanma Tarihi</th>
+				
+				<th scope="col">Detay</th>
+
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var item in Model)
+			{
+				<tr>
+					<th scope="row">@item.TicketId</th>
+					<td>@item.Title</td>
+					<td>@item.Description</td>
+					<td>@item.PublishedOn</td>
+					
+					<td>
+						<a class="btn btn-primary" href="/Ticket/Details/@item.TicketId">Detay</a>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>
