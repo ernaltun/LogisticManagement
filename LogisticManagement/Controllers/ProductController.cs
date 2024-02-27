@@ -13,15 +13,15 @@ namespace LogisticManagement.Controllers
             _productRepository = productRepository;
         }
 
-        [Authorize]
-        public IActionResult Index()
+		[Authorize(Roles = "admin")]
+		public IActionResult Index()
         {
             var customers = _productRepository.GetAll().ToList();
             return View(customers);
         }
 
-        [Authorize]
-        public IActionResult AddProduct()
+		[Authorize(Roles = "admin")]
+		public IActionResult AddProduct()
         {
             return View();
         }
@@ -31,8 +31,8 @@ namespace LogisticManagement.Controllers
             _productRepository.Insert(customer);
             return RedirectToAction("Index");
         }
-        [Authorize]
-        public IActionResult ProductDetails(int id)
+		[Authorize(Roles = "admin")]
+		public IActionResult ProductDetails(int id)
         {
             var customerDetail = _productRepository.GetById(id);
             return View(customerDetail);

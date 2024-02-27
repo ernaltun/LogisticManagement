@@ -22,13 +22,13 @@ namespace LogisticManagement.Controllers
             _customerRepository = customerRepository;
 
         }
-        [Authorize]
-        public async Task<IActionResult> Index()
+		[Authorize(Roles = "admin")]
+		public async Task<IActionResult> Index()
         {
             return View(await _invoiceRepository.Invoices.Include(x => x.Customer).ToListAsync());
         }
-        [Authorize]
-        public IActionResult AddInvoice()
+		[Authorize(Roles = "admin")]
+		public IActionResult AddInvoice()
         {
             ViewBag.Customers = _customerRepository.GetAll();
             var productv = _productRepository.GetAll(); // veya başka bir yöntemle ürünleri alın
@@ -71,8 +71,8 @@ namespace LogisticManagement.Controllers
             ViewBag.Products = _productRepository.GetAll(); // Ürünleri ViewBag üzerinden alın
             return View(invoiceViewModel);
         }
-        [Authorize]
-        [HttpGet]
+		[Authorize(Roles = "admin")]
+		[HttpGet]
         public async Task<IActionResult> InvoiceDetails(int id)
         {
             var invoice = await _invoiceRepository.Invoices

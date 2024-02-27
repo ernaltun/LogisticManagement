@@ -1,0 +1,36 @@
+﻿@{
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model List<Message>
+
+<div class="container mt-5 border table-bordered">
+	<h2>Mesajlar ve Teklif İstekleri</h2>
+	<hr />
+	<table class="table">
+		<thead>
+			<tr>
+				<th scope="col">#</th>
+				<th scope="col">Adı Soyadı</th>
+				<th scope="col">Mail Adres</th>
+				<th scope="col">Konu/Başlık</th>
+				<th scope="col">Mesaj</th>
+				<th scope="col">Detay</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var item in Model)
+			{
+				<tr>
+					<th scope="row">@item.MessageId</th>
+					<th scope="row">@item.Name</th>
+					<td>@item.Mail</td>
+					<td>@item.Title</td>
+					<td>@item.Description</td>
+					<td>
+						<a class="btn btn-primary" href="//Details/@item.MessageId">Detay</a>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>

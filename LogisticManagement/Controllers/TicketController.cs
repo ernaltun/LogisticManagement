@@ -38,7 +38,8 @@ namespace LogisticManagement.Controllers
             _ticketRepository.Insert(model);
             return RedirectToAction("Index");
         }
-        public async Task<IActionResult> Details(int id)
+		[Authorize]
+		public async Task<IActionResult> Details(int id)
         {
 
             var ticket = _ticketRepository.GetById(id);
@@ -79,7 +80,7 @@ namespace LogisticManagement.Controllers
                     IsActive = true
                 }
             );
-            return RedirectToAction("Index");
+            return RedirectToAction("GetTicketByCurrentUser");
         }
         [HttpPost]
         public JsonResult AddComment(int TicketId, string UserName, string Text)
@@ -105,7 +106,8 @@ namespace LogisticManagement.Controllers
             });
 
         }
-        [HttpGet]
+		[Authorize]
+		[HttpGet]
         public IActionResult GetTicketByCurrentUser()
         {
             // Aktif kullanıcıyı al

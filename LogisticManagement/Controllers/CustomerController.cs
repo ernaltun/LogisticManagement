@@ -12,15 +12,13 @@ namespace LogisticManagement.Controllers
         {
             _customerRepository = customerRepository;
         }
-
-        [Authorize]
+		[Authorize(Roles = "admin")]
         public IActionResult Index()
         {
             var customers = _customerRepository.GetAll().ToList();
             return View(customers);
         }
-
-        [Authorize]
+		[Authorize(Roles = "admin")]
         public IActionResult AddCustomer()
         {
             return View();
@@ -31,19 +29,21 @@ namespace LogisticManagement.Controllers
             _customerRepository.Insert(customer);
             return RedirectToAction("Index");
         }
-        [Authorize]
-        public IActionResult CustomerDetails(int id)
+		[Authorize(Roles = "admin")]
+		public IActionResult CustomerDetails(int id)
         {
             var customerDetail = _customerRepository.GetById(id);
             return View(customerDetail);
         }
-        [HttpPost]
+		[Authorize(Roles = "admin")]
+		[HttpPost]
         public IActionResult CustomerEdit(Customer customer)
         {
             _customerRepository.Update(customer);
             return RedirectToAction("Index");
         }
-        [HttpDelete]
+		[Authorize(Roles = "admin")]
+		[HttpDelete]
         public IActionResult DeleteCustomer(int id)
         {
             _customerRepository.Delete(id);
