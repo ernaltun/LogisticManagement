@@ -1,0 +1,37 @@
+﻿@model Permit
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div>
+    <p> Kalan İzin Hakkı: @ViewBag.kalanIzin</p>
+</div>
+<form asp-action="AddPermit" asp-controller="Permit" method="post">
+    
+    <div class="form-group">
+        <label asp-for="PermitStart">Başlangıç Tarihi</label>
+        <input asp-for="PermitStart" class="form-control" />
+        <span asp-validation-for="PermitStart" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="PermitFinish">Bitiş Tarihi</label>
+        <input asp-for="PermitFinish" class="form-control" />
+        <span asp-validation-for="PermitFinish" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Description">Açıklama</label>
+        <input asp-for="Description" class="form-control" />
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="PermitType">İzin Türü</label>
+        <select asp-for="PermitType" class="form-control">
+            <option value="Yıllık ücretli izin">Yıllık ücretli izin</option>
+            <option value="Mazeret izni">Mazeret izni</option>
+            <option value="Ücretsiz İzin">Ücretsiz İzin</option>
+            <option value="Ölüm izni">Ölüm izni</option>
+        </select>
+        <span asp-validation-for="PermitType" class="text-danger"></span>
+    </div>
+    <br />
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>

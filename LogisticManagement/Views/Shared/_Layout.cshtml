@@ -34,7 +34,7 @@
 						</li>
 						<li class="nav-item dropdown">
 							<a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								Satış Departman Yönetim
+								Muhasebe Yönetim
 							</a>
 							<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 								<a class="dropdown-item" href="/product/index">Ürün Yönetim</a>
@@ -67,11 +67,30 @@
 							}
 						</div>
 					</li>
-					<li class="nav-item">
-						<a href="/profile/@User.Identity.Name" class="nav-link">@User.Identity.Name</a>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							İzin Talep
+						</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<a class="dropdown-item" href="/permit/addpermit">İzin Talebi Oluştur</a>
+							<a class="dropdown-item" href="/permit/getuserpermitsall">İzin Taleplerim</a>
+							<div class="dropdown-divider"></div>
+							@if (User.IsInRole("admin"))
+							{
+								<a href="/permit/index" class="dropdown-item">İzin Talepleri</a>
+							}
+						</div>
+						
 					</li>
-					<li class="nav-item">
-						<a href="/users/logout" class="nav-link ">Logout</a>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							@User.Identity.Name
+						</a>
+						<div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+							<a class="dropdown-item" href="/users/profile?username=@User.Identity.Name">Profile</a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href="/users/logout">Logout</a>
+						</div>
 					</li>
 
 				}

@@ -76,7 +76,7 @@ namespace LogisticManagement.Controllers
                     Description = model.Description,
                     UserId = int.Parse(userId ?? ""),
                     PublishedOn = DateTime.Now,
-                    Image = "11.jpg",
+                    Image = "LOGO1.jpg",
                     IsActive = true
                 }
             );
@@ -110,16 +110,13 @@ namespace LogisticManagement.Controllers
 		[HttpGet]
         public IActionResult GetTicketByCurrentUser()
         {
-            // Aktif kullanıcıyı al
             int currentUser = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
             if (currentUser == null)
             {
-                // Kullanıcı bulunamazsa bir hata işle
                 return NotFound();
             }
 
-            // Kullanıcının ID'sini kullanarak biletleri al
             var tickets = _ticketRepository.GetByUser(currentUser);
             return View(tickets);
         }

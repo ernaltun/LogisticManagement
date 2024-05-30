@@ -1,0 +1,42 @@
+﻿@model List<Permit>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<a asp-action="AddPermit" asp-controller="Permit" class="btn btn-primary">İzin Ekle</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Personel Adı</th>
+            <th>İzin tarih aralığı</th>
+            <th>İzin tipi</th>
+            <th>Açıklama</th>
+            <th>Onay Durumu</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var permit in Model)
+        {
+            <tr>
+                <td>@permit.PermitId</td>
+                <td>@permit.User.UserName</td>
+                <td>@permit.PermitStart - @permit.PermitFinish</td>
+                <td>@permit.PermitType</td>
+                <td>
+                    <a asp-controller="Permit" asp-action="PermitEditConfirm" asp-route-id="@permit.PermitId" class="btn btn-info">Detay</a>
+                </td>
+                <td>
+                    @if (permit.IsApproval)
+                    {
+                        <strong style="color:green;">ONAYLI</strong>
+                    }
+                    else
+                    {
+                        <strong style="color:red;">ONAYSIZ</strong>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,42 @@
+﻿@{
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model List<Permit>
+
+<div class="container mt-5 border table-bordered">
+	<h2>İzin Taleplerim Talepleri</h2>
+	<a class="btn btn-info" href="/Permit/AddPermit/">İzin Talep Oluştur</a>
+	<hr />
+	<table class="table">
+		<thead>
+			<tr>
+				<th scope="col">#</th>
+				<th scope="col">Personel</th>
+				<th scope="col">Açıklama</th>
+				<th scope="col">İzin Tarih Aralığı</th>
+				<th scope="col">Onay Durumu</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var item in Model)
+			{
+				<tr>
+					<th scope="row">@item.PermitId</th>
+					<td>@item.User.Name</td>
+					<td>@item.Description</td>
+					<td>@item.PermitStart - @item.PermitFinish</td>
+					<td>
+						@if (item.IsApproval)
+						{
+							<strong style="color:green;">ONAYLI</strong>
+						}
+						else
+						{
+							<strong style="color:red;">ONAYSIZ</strong>
+						}
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>

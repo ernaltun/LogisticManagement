@@ -31,9 +31,8 @@ namespace LogisticManagement.Controllers
 		public IActionResult AddInvoice()
         {
             ViewBag.Customers = _customerRepository.GetAll();
-            var productv = _productRepository.GetAll(); // veya başka bir yöntemle ürünleri alın
+            var productv = _productRepository.GetAll();
 
-            // Ürünleri SelectList'e dönüştürme
             ViewBag.Products = new SelectList(productv, "ProductId", "Name");
             return View();
         }
@@ -62,6 +61,9 @@ namespace LogisticManagement.Controllers
                 Products = products
             };
 
+            var balanceRemaining = customer.Balance - invoice.Amount;
+            customer.Balance = balanceRemaining;
+            _customerRepository.Update(customer);
             _invoiceRepository.Insert(invoice);
 
             return RedirectToAction(nameof(Index));

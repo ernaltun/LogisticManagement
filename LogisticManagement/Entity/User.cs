@@ -12,6 +12,7 @@ namespace LogisticManagement.Entity
 		public string? Email { get; set; }
 		public string? Password { get; set; }
 		public string? Image { get; set; }
+		public int PermitRemaining { get; set; }
 		public List<Ticket> Tickets { get; set; } = new List<Ticket>();
 		public List<Comment> Comments { get; set; } = new List<Comment>();
 	}

@@ -16,5 +16,6 @@ namespace LogisticManagement.Data.Concrete.Context
 		public DbSet<Product> Products { get; set; }
 		public DbSet<Invoice> Invoices { get; set; }
 		public DbSet<Message> Messages { get; set; }
+		public DbSet<Permit> Permits { get; set; }
 	}
 }

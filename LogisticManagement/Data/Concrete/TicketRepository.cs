@@ -11,9 +11,7 @@ namespace LogisticManagement.Data.Concrete
         {
             _context = dataContext;
         }
-
         public IQueryable<Ticket> Tickets => _context.Tickets;
-
         public void Delete(int id)
 		{
 			throw new NotImplementedException();

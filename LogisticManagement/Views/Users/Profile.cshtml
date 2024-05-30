@@ -1,36 +1,26 @@
-﻿@{
+﻿@model User
+@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@model User
+@{
+    ViewData["Title"] = "Kullanıcı Profili";
+}
 
-<div class="row">
-    <div class="col-md-2">
-        <div class="bg-white p-4">
-            <img src="/img/@Model.Image" class="img-fluid" alt="">
-        </div>
-    </div>
-    <div class="col-md-10">
-        <div class="bg-white p-4">
-            <h5>@Model.Name</h5>
-            <hr>
-            <div id="posts">
-                <h5 class="my-4">Yayınlanan Gönderiler</h5>
-                <ul class="list-group">
-                    @foreach (var post in @Model.Tickets)
-                    {
-                        <li class="list-group-item"><i class="bi bi-caret-right-fill"></i> <a href="/posts/details/@post.TicketId"> @post.Title</a></li>
-                    }
-                </ul>
-            </div>
-            <div id="comments">
-                <h5 class="my-4">Yorumlar</h5>
-                <ul class="list-group">
-                    @foreach (var comment in @Model.Comments)
-                    {
-                        <li class="list-group-item"><i class="bi bi-chat-right-text-fill"></i> @comment.Text <a href="/posts/details/@comment.TicketId"><i><u>[@comment.Ticket.Title]</u></i></a></li>
-                    }
-                </ul>
+<div class="container mt-5">
+    <h1 class="mb-4">Kullanıcı Profili</h1>
+
+    @if (Model != null)
+    {
+        <div class="card mb-4">
+            <div class="card-body">
+                <h3 class="card-title">Profil Bilgileri</h3>
+                <p><strong>İsim:</strong> @Model.Name</p>
+                <p><strong>Email:</strong> @Model.Email</p>
+                <p><strong>Kalan İzin Hakkı:</strong> @Model.PermitRemaining</p>
+                @* Kullanıcı resmi için URL varsa, şöyle gösterebilirsiniz: *@
+                <img src="@Model.Image" class="img-fluid rounded mt-3" alt="Kullanıcı Resmi">
             </div>
         </div>
-    </div>
+
+    }
 </div>
